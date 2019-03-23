@@ -17,7 +17,7 @@ class Utilisateur{
         $this->afficher = $db->prepare("select email, idRole, nom, prenom, r.libelle as libellerole from utilisateur u, role r where u.idRole = r.id AND email = :email");
         $this->role = $db->prepare("select id, libelle from role");
         $this->modifier = $db->prepare("UPDATE utilisateur set nom = :nom, prenom = :prenom, idRole = :idRole WHERE email = :email");
-        $this->modifierPass = $db->prepare("UPDATE utilisateur set mdp :mdp WHERE email = :email");
+        $this->modifierPass = $db->prepare("UPDATE utilisateur set mdp = :mdp WHERE email = :email");
     }
      public function insert($email, $mdp, $role, $nom, $prenom){ // Étape 3
         $r = true;

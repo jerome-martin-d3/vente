@@ -27,7 +27,7 @@ class Type{
     
     public function insert($libelle){
         $this->insert->execute(array(':libelle'=>$libelle));
-        if($this->insert->errorCoEcrande()!=0)
+        if($this->insert->errorCode()!=0)
         {
             print_r($this->insert->errorInfo());
         }

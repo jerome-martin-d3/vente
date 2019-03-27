@@ -14,7 +14,7 @@ class Produit{
         $this->delete = $db->prepare("DELETE FROM produit WHERE id = :id");
         $this->listeTypes = $db->prepare("SELECT * FROM type");
         $this->insert = $db->prepare("INSERT INTO produit(designation, description, prix, idType) values(:designation, :description, :prix, :idType)");
-        $this->selectByID = $db->prepare("SELECT id, designation, description, prix, libelle from produit, type where idType = ntype AND id = :id");
+        $this->selectByID = $db->prepare("SELECT id, designation, description, prix, libelle, idType from produit, type where idType = ntype AND id = :id");
         $this->update = $db->prepare("UPDATE produit set designation = :designation, description = :description, prix = :prix, idType = :idType WHERE id = :id");
     }
     public function select(){
@@ -39,8 +39,8 @@ class Produit{
         }
         return $this->listeTypes->fetchAll();
     }
-    public function insert($designation, $description, $prix, $idType){
-        $this->insert->execute(array(':designation'=>$designation, ':description'=>$description, ':prix'=>$prix, ':idType'=>$idType));
+    public function insert($designation, $description, $prix){
+        $this->insert->execute(array(':designation'=>$designation, ':description'=>$description, ':prix'=>$prix));
         if($this->insert->errorCode()!=0)
         {
             print_r($this->insert->errorInfo());
@@ -55,6 +55,7 @@ class Produit{
     }
     
     public function update($id, $designation, $description, $prix, $idType){
+        echo 'ghgygtg'.$idType;
         $this->update->execute(array(':id'=>$id, ':designation'=>$designation, ':description'=>$description, ':prix'=>$prix, ':idType'=>$idType));
         if($this->update->errorCode()!=0){
             print_r($this->update->errorInfo());

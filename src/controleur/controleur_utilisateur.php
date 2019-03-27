@@ -2,6 +2,10 @@
 
     function actionUtilisateur($twig, $db){
         $utilisateur = new Utilisateur($db);
+        if(isset($_POST['btSup'])){
+            $email = $_POST['email'];
+            $utilisateur->delete($email);
+        }
         $liste = $utilisateur->select();
         echo $twig->render('utilisateur.html.twig', array('liste'=>$liste));
     }
@@ -28,6 +32,7 @@
                 }
             }
             $utilisateur->modifier($email, $nom, $prenom, $idRole);
+            header("Location: index.php?page=utilisateur");
         }
         $util = $utilisateur->afficher($_POST['email']);
         echo $twig->render('utilisateur-modif.html.twig', array('liste'=>$util, 'roles'=>$roles, 'form'=>$form));

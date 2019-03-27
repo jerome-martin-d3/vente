@@ -8,6 +8,7 @@ class Utilisateur{
     private $role;
     private $modifier;
     private $modifierPass;
+    private $delete;
    
     public function __construct($db){
         $this->db = $db;
@@ -18,6 +19,7 @@ class Utilisateur{
         $this->role = $db->prepare("select id, libelle from role");
         $this->modifier = $db->prepare("UPDATE utilisateur set nom = :nom, prenom = :prenom, idRole = :idRole WHERE email = :email");
         $this->modifierPass = $db->prepare("UPDATE utilisateur set mdp = :mdp WHERE email = :email");
+        $this->delete = $db->prepare("DELETE from utilisateur where email = :email");
     }
      public function insert($email, $mdp, $role, $nom, $prenom){ // Étape 3
         $r = true;
@@ -77,5 +79,10 @@ class Utilisateur{
         }
         return $this->modifierPass->fetchAll();
     }
-    
+    public function delete($email){
+        $this->delete->execute(array(':email'=>$email));
+        if($this->delete->errorCode()!=0){
+            print_r($this->delete->errorInfo());
+        }
+    }
 }

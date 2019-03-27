@@ -20,7 +20,9 @@
                 
                 <label for="inputPrix" class="sr-only">Prix</label>
                 <input type="number" step="0.01" class="form-control" name="inputPrix" value="{{prod.prix}}" />
-                <select name="inputType" class="form-control">
+                
+                <label for="inputType" class="sr-only">Type</label>
+                <select name="inputType" id="inputType" class="form-control">
                     <option value="{{prod.idType}}">{{prod.libelle}}</option>
                         {% for type in types %}
                             <option value="{{type.ntype}}">{{type.libelle}}</option>

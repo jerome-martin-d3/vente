@@ -9,13 +9,11 @@ function getPage($db){
  $lesPages['inscription'] =  "actionInscription;0";
  $lesPages['maintenance'] = "actionMaintenance;0";
  $lesPages['gestionTypes'] = "actionType;1";
- $lesPages['ajoutType'] = "ajoutType;1";
- $lesPages['supType'] = "supType;1";
+ $lesPages['modifType'] = "actionModifType;1";
  $lesPages['utilisateur'] = "actionUtilisateur;1";
  $lesPages['gestionProduits'] = "actionProduit;1";
- $lesPages['ajoutProd'] = "ajoutProd;1";
- $lesPages['supProd'] = "supProd;1";
  $lesPages['modifutilisateur'] = "actionModifUtilisateur;1";
+ $lesPages['modifProduit'] = "actionModifProduit;1";
  if ($db!=null){
   if(isset($_GET['page'])){
     

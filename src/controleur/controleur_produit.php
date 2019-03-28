@@ -12,8 +12,15 @@ function actionProduit($twig, $db){
         $exec = $prod->insert($designation, $description, $prix, $idType);
     }
     if(isset($_POST['btSupProd'])){
+        $cocher = $_POST['cocher'];
         $id = $_POST['inputID'];
         $prod->delete($id);
+    }
+    if(isset($_POST['btSupprimerPlusieurs'])){
+        $id = $_POST['inputID'];
+        foreach ($cocher as $id){
+            $prod->delete($id);
+        }
     }
     $liste = $prod->select();
     $types = $prod->listeTypes();

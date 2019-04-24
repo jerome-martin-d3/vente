@@ -36,7 +36,7 @@ function actionModifProduit($twig, $db){
         $prix = $_POST['inputPrix'];
         $idType = $_POST['inputType'];
         $update= $prod->update($id, $designation, $description, $prix, $idType);
-       // header("Location: index.php?page=gestionProduits");
+       header("Location: index.php?page=gestionProduits");
     }
         
         $liste = $prod->selectByID($id);

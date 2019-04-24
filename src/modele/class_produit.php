@@ -55,7 +55,6 @@ class Produit{
     }
     
     public function update($id, $designation, $description, $prix, $idType){
-        echo 'ghgygtg'.$idType;
         $this->update->execute(array(':id'=>$id, ':designation'=>$designation, ':description'=>$description, ':prix'=>$prix, ':idType'=>$idType));
         if($this->update->errorCode()!=0){
             print_r($this->update->errorInfo());

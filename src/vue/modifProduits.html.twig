@@ -11,7 +11,13 @@
          <div class="panel-body">
              {% for prod in liste %}
             <form  class="form-signin" action="index.php?page=modifProduit" method="post" enctype="application/x-www-form-urlencoded">
-                
+                {% if form.produit.photo is not empty %}
+      <p class="imgcenter"><img src="images/{{form.produit.photo}}" alt=
+"image du 
+produit
+"
+/></p>  
+ {% endif %}
                 <label for="inputDesignation" class="sr-only">Designation</label>
                 <input type="text" id="inputDesignation" name="inputDesignation" class="form-control" value="{{prod.designation}}" />
                 

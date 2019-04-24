@@ -10,10 +10,10 @@ class Produit{
     
     public function __construct($db){
         $this->db = $db;
-        $this->select = $db->prepare("select id, designation, description, prix, libelle from produit, type where idType = ntype");
+        $this->select = $db->prepare("select id, designation, description, prix, libelle, photo from produit, type where idType = ntype");
         $this->delete = $db->prepare("DELETE FROM produit WHERE id = :id");
         $this->listeTypes = $db->prepare("SELECT * FROM type");
-        $this->insert = $db->prepare("INSERT INTO produit(designation, description, prix, idType) values(:designation, :description, :prix, :idType)");
+        $this->insert = $db->prepare("INSERT INTO produit(designation, description, prix, idType, photo) values(:designation, :description, :prix, :idType, :photo)");
         $this->selectByID = $db->prepare("SELECT id, designation, description, prix, libelle, idType from produit, type where idType = ntype AND id = :id");
         $this->update = $db->prepare("UPDATE produit set designation = :designation, description = :description, prix = :prix, idType = :idType WHERE id = :id");
     }
@@ -39,8 +39,8 @@ class Produit{
         }
         return $this->listeTypes->fetchAll();
     }
-    public function insert($designation, $description, $prix){
-        $this->insert->execute(array(':designation'=>$designation, ':description'=>$description, ':prix'=>$prix));
+    public function insert($designation, $description, $prix, $idType, $photo){
+        $this->insert->execute(array(':designation'=>$designation, ':description'=>$description, ':prix'=>$prix,':idType'=>$idType, ':photo'=>$photo));
         if($this->insert->errorCode()!=0)
         {
             print_r($this->insert->errorInfo());

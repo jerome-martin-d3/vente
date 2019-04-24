@@ -9,7 +9,32 @@ function actionProduit($twig, $db){
         $description = $_POST['description'];
         $prix = $_POST['inputPrix'];
         $idType = $_POST['inputType'];
-        $exec = $prod->insert($designation, $description, $prix, $idType);
+        $photo = NULL;
+        if(isset($_FILES['inputPhoto'])){
+            if(!empty($_FILES['inputPhoto']['name'])){
+                $extensions_ok= array('png', 'gif', 'jpg','jpeg');
+                $taille_max = 500000;
+                $dest_dossier="/var/www/html/vente/web/images/";
+                
+                if( !in_array( substr(strrchr($_FILES['inputPhoto']['name'], '.'), 1), $extensions_ok ) ){
+                    echo 'Veuillez sélectionner un fichier de type png, gif ou jpg !';
+                }
+                else{
+                    if( file_exists($_FILES['inputPhoto']['tmp_name'])&& (filesize($_FILES['inputPhoto']['tmp_name'])) >  $taille_max){
+                        echo 'Votre fichier doit faire moins de 500Ko !';
+                    }else{
+                        $photo = basename($_FILES['inputPhoto']['name']);
+                        // enlever les accents              
+                        $photo=strtr($photo,'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ','AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+                        // remplacer les caractères autres que lettres, chiffres et point par _
+                        $photo = preg_replace('/([^.a-z0-9]+)/i', '_', $photo);
+                        // copie du fichier
+                        move_uploaded_file($_FILES['inputPhoto']['tmp_name'], $dest_dossier.$photo);
+                    }
+                }
+            }
+        }
+        $exec = $prod->insert($designation, $description, $prix, $idType, $photo);
     }
     if(isset($_POST['btSupProd'])){
         $cocher = $_POST['cocher'];

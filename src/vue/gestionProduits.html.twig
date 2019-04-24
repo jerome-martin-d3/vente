@@ -10,6 +10,7 @@
   <div class="table-responsive">
   <table class="table table-hover table-striped">
       <tr>
+          <th>Image</th>
           <th>Désignation</th>
           <th>Description</th>
           <th>Prix</th>
@@ -19,6 +20,9 @@
       </tr>
       {% for prod in liste %}
             <tr>
+                <td>{% if prod.photo is not empty %}
+                    <p class="imgcenter"><img src="images/{{prod.photo}}" alt="image du produit"/></p>  
+                {% endif %}</td>
                 <td>{{prod.designation}}</td>
                 <td>{{prod.description}}</td>
                 <td>{{prod.prix}} €</td>
@@ -43,17 +47,19 @@
    <div class="panel panel-primary">
         <div class="panel-heading">Ajouter des produits </div>
          <div class="panel-body">
-            <form  class="form-signin" action="index.php?page=gestionProduits" method="post" enctype="application/x-www-form-urlencoded">
-            <input type="text" id="inputDesignation" name="inputDesignation" class="form-control" placeholder="Saisir une désignation" required autofocus/>
-            <textarea name="description" class="form-control" placeholder="Saisir une description" rows="5" required></textarea>
-            <input type="number" step="0.01" id="inputPrix" placeholder="Saisir un prix"  class="form-control" name="inputPrix" required />
-            <select name="inputType" class="form-control" required>
-                <option value="">Choisir un type</option>
-                {% for type in types %}
-                <option value="{{type.ntype}}">{{type.libelle}}</option>
-                {% endfor %}
-            </select>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" name="btAjoutProd">Ajouter</button>
+            <form  class="form-signin" action="index.php?page=gestionProduits" method="post" enctype="multipart/form-data">
+                <input type="text" id="inputDesignation" name="inputDesignation" class="form-control" placeholder="Saisir une désignation" required autofocus/>
+                <textarea name="description" class="form-control" placeholder="Saisir une description" rows="5" required></textarea>
+                <input type="number" step="0.01" id="inputPrix" placeholder="Saisir un prix"  class="form-control" name="inputPrix" required />
+                <select name="inputType" class="form-control" required>
+                    <option value="">Choisir un type</option>
+                    {% for type in types %}
+                    <option value="{{type.ntype}}">{{type.libelle}}</option>
+                    {% endfor %}
+                </select>
+                <label  for="inputPhoto"  class="sr-only">Photo  :</label>
+                <input  type="file"  name="inputPhoto"  id="inputPhoto" class="form-control"/>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name="btAjoutProd">Ajouter</button>
             </form>
          </div>    
   </div>

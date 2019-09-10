@@ -1,0 +1,10 @@
+<style>
+    h1{
+        background-color: gray;
+    }
+</style>
+<h1>Catalogue de Guy Mollet Shop</h1>
+    {% for prod in liste %}
+        <h3>{{ prod.designation }}</h3>
+        <p>Prix : {{ prod.prix }} €</p>
+        {% endfor %}

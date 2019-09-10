@@ -9,15 +9,10 @@
 
         <div class="panel-heading">Modifier un produit </div>
          <div class="panel-body">
-             {% for prod in liste %}
-            <form  class="form-signin" action="index.php?page=modifProduit" method="post" enctype="application/x-www-form-urlencoded">
-                {% if form.produit.photo is not empty %}
-      <p class="imgcenter"><img src="images/{{form.produit.photo}}" alt=
-"image du 
-produit
-"
-/></p>  
- {% endif %}
+            <form  class="form-signin" action="index.php?page=modifProduit" method="post" enctype="multipart/form-data">
+                {% if prod.photo is not empty %}
+                <p class="imgcenter"><img src="images/{{prod.photo}}" alt="image du produit"/></p>  
+                {% endif %}
                 <label for="inputDesignation" class="sr-only">Designation</label>
                 <input type="text" id="inputDesignation" name="inputDesignation" class="form-control" value="{{prod.designation}}" />
                 
@@ -34,11 +29,13 @@ produit
                             <option value="{{type.ntype}}">{{type.libelle}}</option>
                         {% endfor %}
                 </select>
+                
+                <label for="inputPhoto" class="sr-only">Fichier</label>
+                <input type="file" name="inputPhoto" id="inputPhoto" class="form-control" />
+                
                 <input type="hidden" name="id" value="{{prod.id}}" />
                 <button class="btn btn-lg btn-primary btn-block" type="submit" name="btModifProduit">Modifier</button>
             </form>
-            {% endfor %}
-            
          </div>    
   </div>
 {% endblock %} 

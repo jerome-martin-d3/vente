@@ -16,6 +16,7 @@ function getPage($db){
  $lesPages['modifProduit'] = "actionModifProduit;1";
  $lesPages['roles'] = "actionRole;1";
  $lesPages['modifRole'] = "actionModifRole;1";
+ $lesPages['listeproduitpdf'] ="actionListeProduitPdf;0";
  if ($db!=null){
   if(isset($_GET['page'])){
     

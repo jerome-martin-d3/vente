@@ -7,6 +7,9 @@ class Produit{
     private $insert;
     private $selectByID;
     private $update;
+    //pagination
+    private $selectLimit;
+    private $selectCount;
     
     public function __construct($db){
         $this->db = $db;
@@ -14,8 +17,10 @@ class Produit{
         $this->delete = $db->prepare("DELETE FROM produit WHERE id = :id");
         $this->listeTypes = $db->prepare("SELECT * FROM type");
         $this->insert = $db->prepare("INSERT INTO produit(designation, description, prix, idType, photo) values(:designation, :description, :prix, :idType, :photo)");
-        $this->selectByID = $db->prepare("SELECT id, designation, description, prix, libelle, idType from produit, type where idType = ntype AND id = :id");
-        $this->update = $db->prepare("UPDATE produit set designation = :designation, description = :description, prix = :prix, idType = :idType WHERE id = :id");
+        $this->selectByID = $db->prepare("SELECT id, designation, description, prix, libelle, idType, photo from produit, type where idType = ntype AND id = :id");
+        $this->update = $db->prepare("UPDATE produit set designation = :designation, description = :description, prix = :prix, idType = :idType, photo = :photo WHERE id = :id");
+        $this->selectLimit = $db->prepare("SELECT id, desgination, description, prix, idType from produit order by designation limit :inf,:limite");
+        $this->selectCount = $db->prepare("SELECT `count(id)` as nb FROM produit");
     }
     public function select(){
         $this->select->execute();
@@ -51,13 +56,29 @@ class Produit{
         if($this->selectByID->errorCode()!=0){
             print_r($this->selectByID->errorInfo());
         }
-        return $this->selectByID->fetchAll();
+        return $this->selectByID->fetch();
     }
     
-    public function update($id, $designation, $description, $prix, $idType){
-        $this->update->execute(array(':id'=>$id, ':designation'=>$designation, ':description'=>$description, ':prix'=>$prix, ':idType'=>$idType));
+    public function update($id, $designation, $description, $prix, $idType, $photo){
+        $this->update->execute(array(':id'=>$id, ':designation'=>$designation, ':description'=>$description, ':prix'=>$prix, ':idType'=>$idType, ':photo'=>$photo));
         if($this->update->errorCode()!=0){
             print_r($this->update->errorInfo());
         }
+    }
+    public function selectLimit($inf, $limite){
+        $this->selectLimit->bindParam(':inf', $inf, PDO::PARAM_INT);
+        $this->selectLimit->bindParam(':limite', $limite, PDO::PARAM_INT);
+        $this->selectLimit->execute();
+        if($this->selectLimit->errorCode()!=0){
+           print_r($this->selectLimit->errorInfo());
+        }
+        return $this->selectLimit->fetchAll();
+    }
+    public function selectCount(){
+        $this->selectCount()->execute();
+        if($this->selectCount->errorCode()!=0){
+            print_r($this->selectCount->errorInfo());
+        }
+        return $this->selectCount->fetch();
     }
 }

@@ -42,6 +42,27 @@
             </tr> 
      {% endfor %}
   </table>
+  <!-- Pagination -->
+  {% set nb = form.nbpages %}
+
+ <nav aria-label="Page navigation">
+ <ul class="pagination">
+ <li>
+ <a href="index.php?page=produit&nopage={{ 0 }}" aria-label="Previous">
+ <span aria-hidden="true">&laquo;</span>
+ </a>
+ </li>
+ {% for i in 1..nb %}
+ <li><a href="index.php?page=produit&nopage={{ i-1 }}">{{ i }}</a></li>
+ {% endfor %}
+ <li>
+ <a href="index.php?page=produit&nopage={{ nb-1 }}" aria-label="Next">
+ <span aria-hidden="true">&raquo;</span>
+ </a>
+ </li>
+ </ul>
+</nav>
+<!-- Fin pagination -->
   </div>
 </div>
    <div class="panel panel-primary">

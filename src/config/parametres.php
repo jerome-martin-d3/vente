@@ -3,6 +3,6 @@
 $config['serveur'] ='localhost';
 $config['login'] = 'root';
 $config['mdp'] = 'btsinfo';
-$config['bd'] = 'bdvente';
+$config['bd'] = 'vente';
 
 ?>
